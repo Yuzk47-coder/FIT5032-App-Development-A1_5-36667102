@@ -1,5 +1,5 @@
 {
-  "name": "silver-age-wellbeing",
+  "name": "fit5032-app-development-a1_5-36667102",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,6 +13,7 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "pinia": "^4.0.2",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0"

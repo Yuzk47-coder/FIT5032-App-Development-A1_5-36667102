@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Understanding Heart Health in Seniors",
+    "category": "Physical Health",
+    "summary": "Learn about common heart conditions affecting older adults and how to maintain cardiovascular health through diet and exercise.",
+    "content": "Heart disease remains the leading cause of death among seniors. Regular check-ups, a balanced diet low in sodium, and moderate exercise like walking can significantly reduce risks.",
+    "author": "Dr. Sarah Mitchell",
+    "date": "2026-05-10"
+  },
+  {
+    "id": 2,
+    "title": "Managing Diabetes After 60",
+    "category": "Chronic Conditions",
+    "summary": "Practical tips for managing Type 2 diabetes in later life, including meal planning and medication management.",
+    "content": "Managing diabetes requires consistent monitoring of blood sugar levels. Seniors should work closely with their healthcare providers to adjust medications and maintain a stable routine.",
+    "author": "Dr. James Chen",
+    "date": "2026-05-15"
+  },
+  {
+    "id": 3,
+    "title": "Mental Wellness and Social Connection",
+    "category": "Mental Health",
+    "summary": "How staying socially active and engaged can improve mental health outcomes for older adults.",
+    "content": "Loneliness and isolation are significant risk factors for depression in seniors. Community programs, volunteer work, and regular social activities can dramatically improve quality of life.",
+    "author": "Dr. Emily Watson",
+    "date": "2026-06-01"
+  },
+  {
+    "id": 4,
+    "title": "Fall Prevention at Home",
+    "category": "Safety",
+    "summary": "Simple home modifications and exercises to reduce the risk of falls for elderly individuals.",
+    "content": "Falls are a leading cause of injury in seniors. Installing grab bars, removing loose rugs, improving lighting, and doing balance exercises can prevent most falls.",
+    "author": "Dr. Robert Kim",
+    "date": "2026-06-12"
+  },
+  {
+    "id": 5,
+    "title": "Nutrition Guide for Healthy Aging",
+    "category": "Physical Health",
+    "summary": "Essential nutrients and dietary recommendations for maintaining health and energy in your senior years.",
+    "content": "As we age, our nutritional needs change. Focus on calcium, vitamin D, fiber, and protein. Stay hydrated and limit processed foods and excess sugar.",
+    "author": "Dr. Lisa Park",
+    "date": "2026-06-20"
+  },
+  {
+    "id": 6,
+    "title": "Understanding Dementia and Early Signs",
+    "category": "Mental Health",
+    "summary": "Recognizing early symptoms of dementia and understanding available support services for patients and families.",
+    "content": "Early detection of dementia allows for better management and planning. Memory loss, confusion with time, and difficulty completing familiar tasks are key warning signs.",
+    "author": "Dr. Sarah Mitchell",
+    "date": "2026-07-01"
+  }
+]
