@@ -1,58 +1,44 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+
 import HomeView from '../views/HomeView.vue'
+import ProgrammesView from '../views/ProgrammesView.vue'
+import ProgrammeDetailView from '../views/ProgrammeDetailView.vue'
+import ReviewsView from '../views/ReviewsView.vue'
+import EducationView from '../views/EducationView.vue'
+import ContactView from '../views/ContactView.vue'
+import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import AccountView from '../views/AccountView.vue'
+import AdminView from '../views/AdminView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/resources',
-      name: 'resources',
-      component: () => import('../views/ResourcesView.vue')
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: () => import('../views/ContactView.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/LoginView.vue')
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/RegisterView.vue')
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('../views/DashboardView.vue'),
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: () => import('../views/AdminView.vue'),
-      meta: { requiresAuth: true, requiresAdmin: true }
-    }
-  ]
+    { path: '/', name: 'home', component: HomeView },
+    { path: '/programmes', name: 'programmes', component: ProgrammesView },
+    { path: '/programmes/:id', name: 'programme-detail', component: ProgrammeDetailView, props: true },
+    { path: '/reviews', name: 'reviews', component: ReviewsView },
+    { path: '/education', name: 'education', component: EducationView },
+    { path: '/contact', name: 'contact', component: ContactView },
+    { path: '/login', name: 'login', component: LoginView },
+    { path: '/register', name: 'register', component: RegisterView },
+    { path: '/account', name: 'account', component: AccountView, meta: { requiresAuth: true } },
+    { path: '/admin', name: 'admin', component: AdminView, meta: { requiresAdmin: true } }
+  ],
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
-router.beforeEach((to, from, next) => {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'))
-
-  if (to.meta.requiresAuth && !currentUser) {
-    next({ name: 'login' })
-  } else if (to.meta.requiresAdmin && currentUser?.role !== 'admin') {
-    next({ name: 'home' })
-  } else {
-    next()
+// Role-based navigation guards (A1: three access layers)
+router.beforeEach((to) => {
+  const auth = useAuthStore()
+  if (to.meta.requiresAuth && !auth.isLoggedIn) {
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+  if (to.meta.requiresAdmin && !auth.isAdmin) {
+    return { name: 'home' }
   }
 })
 

@@ -2,51 +2,34 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
-  const currentUser = ref(null)
+  // Three access tiers per A1 report: general user / volunteer / admin
+  const users = ref([
+    { id: 1, name: 'Chen Xue', email: 'user@test.com', password: 'user123', role: 'user' },
+    { id: 2, name: 'Amy Wong', email: 'volunteer@test.com', password: 'vol123', role: 'volunteer' },
+    { id: 3, name: 'Lin Hao', email: 'admin@test.com', password: 'admin123', role: 'admin' }
+  ])
+
+  const currentUser = ref(JSON.parse(localStorage.getItem('currentUser') || 'null'))
 
   const isLoggedIn = computed(() => currentUser.value !== null)
   const isAdmin = computed(() => currentUser.value?.role === 'admin')
+  const isVolunteer = computed(() => currentUser.value?.role === 'volunteer')
 
-  function init() {
-    const saved = localStorage.getItem('currentUser')
-    if (saved) {
-      currentUser.value = JSON.parse(saved)
+  function register({ name, email, password }) {
+    if (users.value.some((u) => u.email === email)) {
+      return { ok: false, message: 'An account with this email already exists.' }
     }
-  }
-
-  function getUsers() {
-    const users = localStorage.getItem('users')
-    return users ? JSON.parse(users) : []
-  }
-
-  function register(username, email, password, role = 'user') {
-    const users = getUsers()
-    const exists = users.find(u => u.email === email)
-    if (exists) {
-      return { success: false, message: 'Email already registered' }
-    }
-    const newUser = {
-      id: Date.now().toString(),
-      username,
-      email,
-      password: btoa(password),
-      role,
-      createdAt: new Date().toISOString()
-    }
-    users.push(newUser)
-    localStorage.setItem('users', JSON.stringify(users))
-    return { success: true, message: 'Registration successful' }
+    users.value.push({ id: users.value.length + 1, name, email, password, role: 'user' })
+    return { ok: true }
   }
 
   function login(email, password) {
-    const users = getUsers()
-    const user = users.find(u => u.email === email && u.password === btoa(password))
-    if (!user) {
-      return { success: false, message: 'Invalid email or password' }
-    }
-    currentUser.value = { id: user.id, username: user.username, email: user.email, role: user.role }
-    localStorage.setItem('currentUser', JSON.stringify(currentUser.value))
-    return { success: true, message: 'Login successful' }
+    const found = users.value.find((u) => u.email === email && u.password === password)
+    if (!found) return { ok: false, message: 'Incorrect email or password.' }
+    const { password: _pw, ...safeUser } = found
+    currentUser.value = safeUser
+    localStorage.setItem('currentUser', JSON.stringify(safeUser))
+    return { ok: true, user: safeUser }
   }
 
   function logout() {
@@ -54,17 +37,5 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('currentUser')
   }
 
-  function getAllUsers() {
-    return getUsers().map(u => ({
-      id: u.id,
-      username: u.username,
-      email: u.email,
-      role: u.role,
-      createdAt: u.createdAt
-    }))
-  }
-
-  init()
-
-  return { currentUser, isLoggedIn, isAdmin, register, login, logout, getAllUsers }
+  return { users, currentUser, isLoggedIn, isAdmin, isVolunteer, register, login, logout }
 })

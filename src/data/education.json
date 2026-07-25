@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "title": "Living Well with High Blood Pressure",
+    "topic": "Chronic Disease Management",
+    "readMinutes": 6,
+    "summary": "Simple daily habits that keep your blood pressure steady — food, movement, sleep and monitoring.",
+    "content": [
+      "Check your blood pressure at the same time each day and keep a paper log to show your doctor.",
+      "Aim for less salt: flavour food with herbs, lemon and spices instead.",
+      "A 20-minute gentle walk most days strengthens the heart without strain.",
+      "Take medication at the same time daily — a pill box and alarm help you never miss a dose."
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Recognising the Early Signs of Stroke",
+    "topic": "Prevention",
+    "readMinutes": 4,
+    "summary": "Remember F.A.S.T. — Face, Arms, Speech, Time. Acting quickly saves lives and reduces lasting damage.",
+    "content": [
+      "Face: ask the person to smile — does one side droop?",
+      "Arms: ask them to raise both arms — does one drift down?",
+      "Speech: ask them to repeat a simple sentence — is it slurred?",
+      "Time: if you see any of these signs, call 000 immediately. Note when symptoms started."
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Safe Exercise After 65",
+    "topic": "Healthy Living",
+    "readMinutes": 5,
+    "summary": "Chair exercises, balance training and gentle strength work that protect joints and prevent falls.",
+    "content": [
+      "Start with 5–10 minutes and build up slowly — consistency matters more than intensity.",
+      "Chair squats and heel raises strengthen the legs that catch you when you stumble.",
+      "Tai chi and slow balance work are proven to reduce fall risk.",
+      "Stop and rest if you feel dizzy, chest tightness or unusual breathlessness."
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Caring for a Parent at Home: A Family Guide",
+    "topic": "Home Care",
+    "readMinutes": 7,
+    "summary": "Practical advice for families: medication routines, home safety checks, and looking after yourself too.",
+    "content": [
+      "Keep a shared medication chart on the fridge so every family member knows what was taken and when.",
+      "Remove loose rugs, add grab rails in the bathroom, and keep walkways lit at night.",
+      "Schedule regular home visits from our volunteers so you can rest — respite care is not selfish.",
+      "Watch for changes in appetite, sleep or mood, and report them to the GP early."
+    ]
+  }
+]
