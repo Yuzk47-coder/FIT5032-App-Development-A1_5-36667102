@@ -42,19 +42,32 @@ function validate() {
   return Object.keys(e).length === 0
 }
 
+function sessionRemaining(session) {
+  return bookingStore.remainingCapacity(programme.value.id, session)
+}
+
+function sessionUnavailable(session) {
+  return sessionRemaining(session) <= 0
+}
+
 function submitBooking() {
   bookingSuccess.value = false
   if (!validate()) return
   const session = programme.value.sessions[Number(form.value.sessionIndex)]
-  bookingStore.addBooking({
+  const result = bookingStore.addBooking({
     programmeId: programme.value.id,
     programmeName: programme.value.name,
     sessionDate: session.date,
     sessionTime: session.time,
     userName: form.value.name.trim(),
     userEmail: form.value.email.trim(),
-    phone: form.value.phone.trim()
-  })
+    phone: form.value.phone.trim(),
+    notes: form.value.notes.trim()
+  }, session.capacity)
+  if (!result.ok) {
+    errors.value = { sessionIndex: result.message }
+    return
+  }
   bookingSuccess.value = true
   form.value = { name: '', email: '', phone: '', sessionIndex: '', notes: '' }
   errors.value = {}
@@ -127,7 +140,7 @@ function prefillForUser() {
             <li v-for="(s, i) in programme.sessions" :key="i">
               <span class="session-date">📅 {{ s.date }}</span>
               <span class="session-time">🕘 {{ s.time }}</span>
-              <span class="session-cap">{{ s.capacity }} places</span>
+              <span class="session-cap">{{ sessionRemaining(s) }} of {{ s.capacity }} places left</span>
             </li>
           </ul>
         </section>
@@ -196,8 +209,10 @@ function prefillForUser() {
 
       <aside class="detail-side">
         <section class="card booking-card reveal">
+          <p class="eyebrow">A3 F.1 · constrained appointment booking</p>
           <h2>Book this service</h2>
-          <div v-if="bookingSuccess" class="success-banner">
+          <p class="booking-note">Availability updates from confirmed bookings. Duplicate and same-time bookings are blocked.</p>
+          <div v-if="bookingSuccess" class="success-banner" role="status">
             ✅ Booking confirmed! We look forward to seeing you.
           </div>
           <form @submit.prevent="submitBooking" novalidate>
@@ -224,8 +239,8 @@ function prefillForUser() {
               <select id="b-session" v-model="form.sessionIndex" class="form-control"
                 :class="{ invalid: errors.sessionIndex }">
                 <option value="" disabled>Select a date…</option>
-                <option v-for="(s, i) in programme.sessions" :key="i" :value="i">
-                  {{ s.date }} · {{ s.time }}
+                <option v-for="(s, i) in programme.sessions" :key="i" :value="i" :disabled="sessionUnavailable(s)">
+                  {{ s.date }} · {{ s.time }} · {{ sessionRemaining(s) }} places left{{ sessionUnavailable(s) ? ' (FULL)' : '' }}
                 </option>
               </select>
               <p v-if="errors.sessionIndex" class="error-msg">{{ errors.sessionIndex }}</p>

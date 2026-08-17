@@ -29,6 +29,7 @@ const filtered = computed(() =>
     <p class="page-intro">
       Browse all charitable services offered by the foundation. Select a
       programme to see full details and book a session.
+      <RouterLink to="/service-map">Find services on the interactive map →</RouterLink>
     </p>
 
     <div class="filter-bar" role="group" aria-label="Filter programmes by category">

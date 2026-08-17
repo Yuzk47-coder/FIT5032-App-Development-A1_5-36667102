@@ -3,25 +3,19 @@ import { ref, watchEffect } from 'vue'
 import AppNavbar from './components/AppNavbar.vue'
 import AppFooter from './components/AppFooter.vue'
 
-// Senior mode toggle — persisted in localStorage (WCAG 2.1 AA)
 const largeFont = ref(localStorage.getItem('seniorMode') === 'true')
-
 watchEffect(() => {
   document.documentElement.classList.toggle('font-large', largeFont.value)
   localStorage.setItem('seniorMode', largeFont.value)
 })
-
-function toggleFont() {
-  largeFont.value = !largeFont.value
-}
+function toggleFont() { largeFont.value = !largeFont.value }
 </script>
 
 <template>
   <div class="app-shell">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <AppNavbar :large-font="largeFont" @toggle-font="toggleFont" />
-    <main>
-      <RouterView />
-    </main>
+    <main id="main-content" tabindex="-1"><RouterView /></main>
     <AppFooter />
   </div>
 </template>

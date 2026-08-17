@@ -163,3 +163,32 @@ a { color: var(--teal-700); }
 @media (max-width: 760px) {
   h1 { font-size: calc(var(--fs-base) * 1.7); }
 }
+
+/* ===== A3 E.3 Accessibility improvements ===== */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 0.5rem;
+  transform: translateY(-180%);
+  z-index: 9999;
+  background: var(--white);
+  color: var(--teal-900);
+  padding: 0.6rem 0.9rem;
+  border: 2px solid var(--gold-500);
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+.skip-link:focus { transform: translateY(0); }
+
+:focus-visible { outline: 3px solid var(--gold-500); outline-offset: 3px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--teal-500); outline-offset: 1px; }
+
+.sr-only {
+  position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important;
+  margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important; border: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}

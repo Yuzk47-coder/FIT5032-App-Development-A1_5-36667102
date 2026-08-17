@@ -37,3 +37,8 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Local Firebase web configuration
+.env
+.env.*
+!.env.example

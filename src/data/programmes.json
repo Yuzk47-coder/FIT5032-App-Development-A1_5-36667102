@@ -6,11 +6,21 @@
     "categoryLabel": "Community Free Clinic",
     "summary": "Free health check-ups for seniors: blood pressure, blood sugar, ECG and doctor consultations.",
     "description": "Our volunteer doctors and nurses provide essential health screenings for adults aged 60 and over. Services include blood pressure and blood sugar measurement, ECG, and one-on-one consultations. Please bring your ID and any recent medical records. Family members are welcome to accompany you.",
-    "location": "Downtown Community Centre, Room 101",
+    "location": "Downtown Community Centre, Melbourne VIC",
     "sessions": [
-      { "date": "2026-07-30", "time": "09:00 – 12:00", "capacity": 40 },
-      { "date": "2026-08-06", "time": "14:00 – 17:00", "capacity": 30 }
-    ]
+      {
+        "date": "2026-08-20",
+        "time": "09:00 – 12:00",
+        "capacity": 40
+      },
+      {
+        "date": "2026-08-27",
+        "time": "14:00 – 17:00",
+        "capacity": 30
+      }
+    ],
+    "latitude": -37.8136,
+    "longitude": 144.9631
   },
   {
     "id": 2,
@@ -19,11 +29,21 @@
     "categoryLabel": "In-Home Wellness Visit",
     "summary": "A trained volunteer visits you at home for companionship, a wellbeing check and help with light tasks.",
     "description": "Modelled on the 'Happy Knocking' initiative, this programme matches volunteers with seniors who live alone. Each visit lasts about one hour and can include conversation, reading together, a basic wellbeing check, or help with simple household tasks.",
-    "location": "Your home (metro area)",
+    "location": "North Melbourne Community Hub, Melbourne VIC",
     "sessions": [
-      { "date": "2026-08-03", "time": "10:00 – 11:00", "capacity": 15 },
-      { "date": "2026-08-10", "time": "10:00 – 11:00", "capacity": 15 }
-    ]
+      {
+        "date": "2026-08-24",
+        "time": "10:00 – 11:00",
+        "capacity": 15
+      },
+      {
+        "date": "2026-08-31",
+        "time": "10:00 – 11:00",
+        "capacity": 15
+      }
+    ],
+    "latitude": -37.8031,
+    "longitude": 144.9496
   },
   {
     "id": 3,
@@ -32,10 +52,16 @@
     "categoryLabel": "Health Education",
     "summary": "A guided workshop on preventing and managing hypertension, stroke risk and heart health in later life.",
     "description": "Led by our health education team, this workshop covers practical guidance on chronic disease management: recognising early warning signs of stroke, daily blood pressure habits, diet and safe exercise for older adults. Printed take-home guides are provided in large print.",
-    "location": "Riverside Library, Hall B",
+    "location": "Riverside Library, Melbourne VIC",
     "sessions": [
-      { "date": "2026-08-12", "time": "10:00 – 11:30", "capacity": 50 }
-    ]
+      {
+        "date": "2026-08-25",
+        "time": "10:00 – 11:30",
+        "capacity": 50
+      }
+    ],
+    "latitude": -37.8183,
+    "longitude": 144.9671
   },
   {
     "id": 4,
@@ -44,9 +70,15 @@
     "categoryLabel": "Volunteer Coordination",
     "summary": "Join our volunteer team for a companionship shift at the senior activity centre.",
     "description": "Volunteers support group activities at the senior activity centre: board games, gentle exercise sessions and tea time. Full training is provided before your first shift. This programme is open to registered volunteers only.",
-    "location": "Senior Activity Centre, 8 Elm Road",
+    "location": "Senior Activity Centre, Carlton VIC",
     "sessions": [
-      { "date": "2026-08-08", "time": "13:00 – 16:00", "capacity": 12 }
-    ]
+      {
+        "date": "2026-08-28",
+        "time": "13:00 – 16:00",
+        "capacity": 12
+      }
+    ],
+    "latitude": -37.8001,
+    "longitude": 144.9671
   }
 ]

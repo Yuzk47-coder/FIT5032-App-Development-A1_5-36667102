@@ -13,6 +13,7 @@ const links = computed(() => {
   const base = [
     { to: '/', label: 'Home' },
     { to: '/programmes', label: 'Programmes' },
+    { to: '/service-map', label: 'Service Map' },
     { to: '/reviews', label: 'Reviews' },
     { to: '/education', label: 'Health Education' },
     { to: '/contact', label: 'Contact' }

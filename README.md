@@ -42,3 +42,8 @@ npm run build
 ```sh
 npm run lint
 ```
+
+
+## A3 extension
+
+This project now includes A3 features for interactive tables, GitHub Pages deployment, geolocation/map tools, accessibility, CSV/PDF export, Firebase Authentication support and innovation features. See `A3_IMPLEMENTATION_NOTES.md` for setup and marking notes.

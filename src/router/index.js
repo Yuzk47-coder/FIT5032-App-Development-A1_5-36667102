@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 import HomeView from '../views/HomeView.vue'
@@ -7,17 +7,20 @@ import ProgrammeDetailView from '../views/ProgrammeDetailView.vue'
 import ReviewsView from '../views/ReviewsView.vue'
 import EducationView from '../views/EducationView.vue'
 import ContactView from '../views/ContactView.vue'
+import ServiceMapView from '../views/ServiceMapView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import AccountView from '../views/AccountView.vue'
 import AdminView from '../views/AdminView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  // Hash history avoids 404 errors when this SPA is deployed to GitHub Pages.
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: HomeView },
     { path: '/programmes', name: 'programmes', component: ProgrammesView },
     { path: '/programmes/:id', name: 'programme-detail', component: ProgrammeDetailView, props: true },
+    { path: '/service-map', name: 'service-map', component: ServiceMapView },
     { path: '/reviews', name: 'reviews', component: ReviewsView },
     { path: '/education', name: 'education', component: EducationView },
     { path: '/contact', name: 'contact', component: ContactView },
@@ -26,20 +29,13 @@ const router = createRouter({
     { path: '/account', name: 'account', component: AccountView, meta: { requiresAuth: true } },
     { path: '/admin', name: 'admin', component: AdminView, meta: { requiresAdmin: true } }
   ],
-  scrollBehavior() {
-    return { top: 0 }
-  }
+  scrollBehavior() { return { top: 0 } }
 })
 
-// Role-based navigation guards (A1: three access layers)
 router.beforeEach((to) => {
   const auth = useAuthStore()
-  if (to.meta.requiresAuth && !auth.isLoggedIn) {
-    return { name: 'login', query: { redirect: to.fullPath } }
-  }
-  if (to.meta.requiresAdmin && !auth.isAdmin) {
-    return { name: 'home' }
-  }
+  if (to.meta.requiresAuth && !auth.isLoggedIn) return { name: 'login', query: { redirect: to.fullPath } }
+  if (to.meta.requiresAdmin && !auth.isAdmin) return { name: 'home' }
 })
 
 export default router
