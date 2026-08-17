@@ -67,8 +67,13 @@ export const useBookingStore = defineStore('bookings', () => {
     if (confirmedCount(booking.programmeId, booking.sessionDate, booking.sessionTime) >= capacity) {
       return { ok: false, message: 'This session has just become full. Please choose another session.' }
     }
-    bookings.value.push({ id: Math.max(0, ...bookings.value.map((b) => b.id)) + 1, status: 'confirmed', ...booking })
-    return { ok: true }
+    const savedBooking = {
+      id: Math.max(0, ...bookings.value.map((b) => b.id)) + 1,
+      status: 'confirmed',
+      ...booking
+    }
+    bookings.value.push(savedBooking)
+    return { ok: true, booking: savedBooking }
   }
 
   function updateStatus(id, status) {

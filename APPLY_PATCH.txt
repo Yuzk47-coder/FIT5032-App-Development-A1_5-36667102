@@ -1,0 +1,9 @@
+A3 D.2 EmailJS Patch
+
+Apply this patch on top of your current FIX2 project.
+Copy everything in this folder into the A3_SilverAge_WebApp root and choose Replace when Windows asks.
+
+IMPORTANT:
+- This patch does NOT include or overwrite your local .env file.
+- Your Firebase configuration in .env is preserved.
+- After copying, add the three VITE_EMAILJS_* lines to your existing .env manually.
