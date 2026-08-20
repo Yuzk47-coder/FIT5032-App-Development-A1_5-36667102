@@ -6,7 +6,6 @@ import { useAuthStore } from '../stores/auth'
 import { useBookingStore } from '../stores/bookings'
 import { useReviewStore } from '../stores/reviews'
 import StarRating from '../components/StarRating.vue'
-import { emailJsConfigured, sendBookingConfirmation } from '../services/emailConfirmation'
 
 const route = useRoute()
 const router = useRouter()
@@ -22,9 +21,6 @@ const programmeReviews = computed(() => reviewStore.reviewsForProgramme(Number(r
 const form = ref({ name: '', email: '', phone: '', sessionIndex: '', notes: '' })
 const errors = ref({})
 const bookingSuccess = ref(false)
-const emailStatus = ref('idle')
-const emailMessage = ref('')
-const lastConfirmedBooking = ref(null)
 
 function validate() {
   const e = {}
@@ -54,32 +50,8 @@ function sessionUnavailable(session) {
   return sessionRemaining(session) <= 0
 }
 
-async function sendConfirmationFor(booking) {
-  emailStatus.value = 'sending'
-  emailMessage.value = `Sending confirmation to ${booking.userEmail}…`
-
-  const result = await sendBookingConfirmation(booking)
-  if (result.ok) {
-    emailStatus.value = 'sent'
-    emailMessage.value = `Confirmation email sent to ${booking.userEmail}.`
-  } else if (result.skipped) {
-    emailStatus.value = 'not-configured'
-    emailMessage.value = 'Booking saved. Email confirmation is not configured in this environment yet.'
-  } else {
-    emailStatus.value = 'failed'
-    emailMessage.value = `Booking saved, but the confirmation email failed: ${result.message}`
-  }
-}
-
-async function retryConfirmation() {
-  if (!lastConfirmedBooking.value || emailStatus.value === 'sending') return
-  await sendConfirmationFor(lastConfirmedBooking.value)
-}
-
-async function submitBooking() {
+function submitBooking() {
   bookingSuccess.value = false
-  emailStatus.value = 'idle'
-  emailMessage.value = ''
   if (!validate()) return
   const session = programme.value.sessions[Number(form.value.sessionIndex)]
   const result = bookingStore.addBooking({
@@ -87,7 +59,6 @@ async function submitBooking() {
     programmeName: programme.value.name,
     sessionDate: session.date,
     sessionTime: session.time,
-    location: programme.value.location,
     userName: form.value.name.trim(),
     userEmail: form.value.email.trim(),
     phone: form.value.phone.trim(),
@@ -97,15 +68,10 @@ async function submitBooking() {
     errors.value = { sessionIndex: result.message }
     return
   }
-
   bookingSuccess.value = true
-  lastConfirmedBooking.value = result.booking
   form.value = { name: '', email: '', phone: '', sessionIndex: '', notes: '' }
   errors.value = {}
-
-  await sendConfirmationFor(result.booking)
 }
-
 
 // Review form
 const review = ref({ overall: 0, attitude: 0, professionalism: 0, timeliness: 0, comment: '' })
@@ -243,25 +209,12 @@ function prefillForUser() {
 
       <aside class="detail-side">
         <section class="card booking-card reveal">
-          <p class="eyebrow">A3 D.2 + F.1 · Email API &amp; constrained booking</p>
+          <p class="eyebrow">A3 F.1 · constrained appointment booking</p>
           <h2>Book this service</h2>
-          <p class="booking-note">Availability updates from confirmed bookings. Duplicate and same-time bookings are blocked. A confirmation email is sent after a successful booking.</p>
+          <p class="booking-note">Availability updates from confirmed bookings. Duplicate and same-time bookings are blocked.</p>
           <div v-if="bookingSuccess" class="success-banner" role="status">
             ✅ Booking confirmed! We look forward to seeing you.
           </div>
-          <div v-if="emailStatus !== 'idle'" class="email-status" :class="`email-${emailStatus}`" role="status" aria-live="polite">
-            <strong v-if="emailStatus === 'sending'">✉️ Sending email</strong>
-            <strong v-else-if="emailStatus === 'sent'">✉️ Email sent</strong>
-            <strong v-else-if="emailStatus === 'failed'">⚠️ Email not sent</strong>
-            <strong v-else>ℹ️ Email setup pending</strong>
-            <span>{{ emailMessage }}</span>
-            <button v-if="emailStatus === 'failed'" type="button" class="retry-email" @click="retryConfirmation">
-              Retry email
-            </button>
-          </div>
-          <p v-if="!emailJsConfigured" class="email-config-note">
-            D.2 setup mode: booking works normally; add EmailJS values to <code>.env</code> to enable real confirmation emails.
-          </p>
           <form @submit.prevent="submitBooking" novalidate>
             <div class="form-group">
               <label for="b-name">Full name <span class="required-mark">*</span></label>
@@ -297,7 +250,7 @@ function prefillForUser() {
               <textarea id="b-notes" v-model="form.notes" class="form-control" rows="2"
                 placeholder="Mobility needs, interpreter, etc. (optional)"></textarea>
             </div>
-            <button type="submit" class="btn btn-gold booking-btn" :disabled="emailStatus === 'sending'">{{ emailStatus === 'sending' ? 'Sending confirmation…' : 'Confirm booking' }}</button>
+            <button type="submit" class="btn btn-gold booking-btn">Confirm booking</button>
             <button v-if="auth.isLoggedIn" type="button" class="link-btn" @click="prefillForUser">
               Fill in my details
             </button>
@@ -351,36 +304,6 @@ function prefillForUser() {
 
 .booking-card { border-top: 4px solid var(--gold-500); }
 .booking-btn { width: 100%; }
-.booking-btn:disabled { opacity: 0.7; cursor: wait; }
-.email-status {
-  display: grid;
-  gap: 0.2rem;
-  margin: 0.8rem 0;
-  padding: 0.75rem 0.85rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  font-size: 0.9em;
-}
-.email-sent { background: var(--teal-50); }
-.email-failed { background: #fff5f5; border-color: #feb2b2; }
-.email-sending, .email-not-configured { background: #fffaf0; }
-.email-status span { overflow-wrap: anywhere; }
-.retry-email {
-  justify-self: start;
-  margin-top: 0.35rem;
-  border: 1px solid currentColor;
-  border-radius: 0.45rem;
-  background: transparent;
-  padding: 0.35rem 0.65rem;
-  color: var(--teal-700);
-  font-weight: 700;
-  cursor: pointer;
-}
-.email-config-note {
-  margin: 0.7rem 0;
-  color: #4a5568;
-  font-size: 0.84em;
-}
 .link-btn {
   display: block;
   margin: 0.8rem auto 0;

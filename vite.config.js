@@ -4,8 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// A3: relative asset paths make the production build work on GitHub Pages
-// without purchasing or registering another hosting service.
+// Relative asset paths keep the production build portable when opened or hosted from a subdirectory.
 export default defineConfig({
   base: './',
   plugins: [

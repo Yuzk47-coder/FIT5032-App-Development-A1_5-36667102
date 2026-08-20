@@ -14,7 +14,7 @@ import AccountView from '../views/AccountView.vue'
 import AdminView from '../views/AdminView.vue'
 
 const router = createRouter({
-  // Hash history avoids 404 errors when this SPA is deployed to GitHub Pages.
+  // Hash history keeps SPA routes portable when the app is served from static hosting or a subdirectory.
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: HomeView },

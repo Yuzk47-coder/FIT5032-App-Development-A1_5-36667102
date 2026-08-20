@@ -1,49 +1,47 @@
-# silver-age-wellbeing
+# Silver Age Wellbeing Foundation — FIT5032 A3
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 + Vite web application extending the previous A2 submission.
 
-## Recommended IDE Setup
+## Implemented A3 features
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **D.1 External Authentication:** Firebase Authentication (Email/Password) for normal member registration and login. Local staff demo accounts are retained for role-based marking.
+- **D.3 Interactive Table Data:** Admin booking, user and rating tables support sorting, global search, per-column filtering and 10-row pagination.
+- **E.2 Geo Location:** Service map with category filters, browser geolocation, nearest-service distance and route links.
+- **E.3 Accessibility:** Keyboard navigation, visible focus, skip link, accessible forms/tables, reduced-motion support and responsive layouts.
+- **E.4 Export:** CSV and PDF export for booking and user data.
+- **F.1 Innovation:** Constrained appointment booking, interactive admin dashboard/charts and geolocation service finder.
 
-## Recommended Browser Setup
+D.2 Email, D.4 Cloud Deployment and E.1 Cloud Functions are not included in this final version.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Project setup
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+Production build:
 
 ```sh
 npm run build
+npm run preview
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Firebase Authentication setup
 
-```sh
-npm run lint
+Copy `.env.example` to `.env` and provide the Firebase Web App values used for this assignment:
+
+```env
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_APP_ID=
 ```
 
+Enable Email/Password sign-in in Firebase Authentication. If Firebase is not configured, local demo accounts remain available but external member authentication will not be demonstrated.
 
-## A3 extension
+## Demo staff accounts
 
-This project now includes A3 features for interactive tables, GitHub Pages deployment, geolocation/map tools, accessibility, CSV/PDF export, Firebase Authentication support and innovation features. See `A3_IMPLEMENTATION_NOTES.md` for setup and marking notes.
+- Admin: `admin@test.com` / `admin123`
+- Volunteer: `volunteer@test.com` / `vol123`
+- User: `user@test.com` / `user123`
